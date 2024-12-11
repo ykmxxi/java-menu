@@ -47,7 +47,7 @@ class RecommendationTest {
     @DisplayName("카테고리에 맞는 메뉴 5개를 중복된 메뉴 없이 추천한다.")
     @Test
     void 메뉴_추천() {
-        Coach coach = new Coach("포비", List.of());
+        Coach coach = new Coach("포비");
         List<Category> categories = List.of(JAPANESE_FOOD, JAPANESE_FOOD, KOREAN_FOOD, KOREAN_FOOD, ASIAN_FOOD);
 
         List<Menu> menus = recommendation.recommendMenus(categories, coach);

@@ -1,5 +1,6 @@
 package menu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,12 +12,16 @@ public class Coach {
     private static final int MAX_CAN_NOT_EATABLE_MENU_COUNT = 2;
 
     private final String name;
-    private final List<Menu> canNotEatableMenus;
+    private final List<Menu> canNotEatableMenus = new ArrayList<>();
 
-    public Coach(final String name, final List<Menu> canNotEatableMenus) {
+    public Coach(final String name) {
         validate(name, canNotEatableMenus);
         this.name = name;
-        this.canNotEatableMenus = canNotEatableMenus;
+    }
+
+    public void addCanNotEatableMenus(final List<Menu> menus) {
+        validateCanNotEatableMenusCount(menus);
+        canNotEatableMenus.addAll(menus);
     }
 
     public boolean isEatable(final Menu menu) {
@@ -25,7 +30,6 @@ public class Coach {
 
     private void validate(final String name, final List<Menu> canNotEatableMenus) {
         validateNameLength(name);
-        validateCanNotEatableMenusCount(canNotEatableMenus);
     }
 
     private void validateNameLength(final String name) {

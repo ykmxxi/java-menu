@@ -41,7 +41,9 @@ class MealGroupTest {
     private static List<Coach> coaches(final String... names) {
         List<Coach> coaches = new ArrayList<>();
         for (String name : names) {
-            coaches.add(new Coach(name, List.of()));
+            Coach coach = new Coach(name);
+            coach.addCanNotEatableMenus(List.of());
+            coaches.add(coach);
         }
         return coaches;
     }

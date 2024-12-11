@@ -1,16 +1,30 @@
 package menu.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import menu.domain.Category;
+import menu.domain.Coach;
+import menu.domain.MealGroup;
 import menu.domain.Recommendation;
 
 public class RecommendationService {
 
     private final Recommendation recommendation;
+    private MealGroup mealGroup;
 
-    public RecommendationService(final Recommendation recommendation) {
-        this.recommendation = recommendation;
+    public RecommendationService() {
+        this.recommendation = new Recommendation();
+    }
+
+    public List<String> createMealGroup(final List<String> coachNames) {
+        List<Coach> coaches = new ArrayList<>();
+        for (String coachName : coachNames) {
+            Coach coach = new Coach(coachName);
+            coaches.add(coach);
+        }
+        mealGroup = new MealGroup(coaches);
+        return coachNames;
     }
 
     public List<String> recommendCategories() {

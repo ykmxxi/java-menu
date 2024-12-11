@@ -1,9 +1,16 @@
 package menu;
 
+import menu.presentation.RecommendationClient;
+import menu.presentation.view.InputView;
+import menu.presentation.view.OutputView;
+import menu.service.RecommendationService;
+
 public class Application {
 
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        RecommendationClient recommendationClient =
+                new RecommendationClient(new InputView(), new OutputView(), new RecommendationService());
+        recommendationClient.run();
     }
 
 }

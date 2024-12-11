@@ -8,15 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import menu.domain.Recommendation;
-
 class RecommendationServiceTest {
 
     private RecommendationService recommendationService;
 
     @BeforeEach
     void setUp() {
-        recommendationService = new RecommendationService(new Recommendation());
+        recommendationService = new RecommendationService();
     }
 
     @DisplayName("카테고리 5개를 추천한다.")
