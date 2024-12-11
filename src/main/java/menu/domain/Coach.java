@@ -1,6 +1,7 @@
 package menu.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Coach {
 
@@ -37,6 +38,22 @@ public class Coach {
                     MIN_CAN_NOT_EATABLE_MENU_COUNT, MAX_CAN_NOT_EATABLE_MENU_COUNT
             ));
         }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Coach coach)) {
+            return false;
+        }
+        return Objects.equals(name, coach.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 
 }
