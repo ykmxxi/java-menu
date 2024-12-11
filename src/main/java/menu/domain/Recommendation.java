@@ -54,7 +54,7 @@ public class Recommendation {
 
     private String getRandomMenu(final Category category) {
         return Randoms.shuffle(category.menuNames())
-                .get(0);
+                .getFirst();
     }
 
 }
