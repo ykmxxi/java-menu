@@ -20,6 +20,23 @@ public class MealGroup {
         validateNameDuplication(coaches);
     }
 
+    public Coach findCoach(final String coachName) {
+        for (Coach coach : coaches) {
+            if (coach.hasSameName(coachName)) {
+                return coach;
+            }
+        }
+        throw new IllegalArgumentException("존재하지 않는 코치입니다.");
+    }
+
+    public void addCanNotEatableMenus(final Coach target, final List<Menu> menus) {
+        for (Coach coach : coaches) {
+            if (coach.equals(target)) {
+                coach.addCanNotEatableMenus(menus);
+            }
+        }
+    }
+
     private void validateGroupCount(final List<Coach> coaches) {
         if (coaches.size() < MIN_GROUP_COUNT || coaches.size() > MAX_GROUP_COUNT) {
             throw new IllegalArgumentException("최소 %d명, 최대 %d명까지 식사를 함께할 수 있습니다.".formatted(

@@ -55,4 +55,8 @@ public enum Category {
     public String getName() {
         return this.name;
     }
+
+    public boolean hasMenu(final String menuName) {
+        return this.menuNames.contains(menuName);
+    }
 }

@@ -28,6 +28,10 @@ public class Coach {
         return !canNotEatableMenus.contains(menu);
     }
 
+    public boolean hasSameName(final String otherName) {
+        return this.name.equals(otherName);
+    }
+
     private void validate(final String name, final List<Menu> canNotEatableMenus) {
         validateNameLength(name);
     }
@@ -46,6 +50,10 @@ public class Coach {
                     MIN_CAN_NOT_EATABLE_MENU_COUNT, MAX_CAN_NOT_EATABLE_MENU_COUNT
             ));
         }
+    }
+
+    public String name() {
+        return name;
     }
 
     @Override

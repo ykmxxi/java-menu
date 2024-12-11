@@ -36,4 +36,17 @@ public class Menus {
         throw new IllegalArgumentException("존재하지 않는 메뉴입니다.");
     }
 
+    public static Menu findByName(final String menuName) {
+        for (Category category : menus.keySet()) {
+            if (category.hasMenu(menuName)) {
+                return menus.get(category)
+                        .stream()
+                        .filter(menu -> menu.hasSameName(menuName))
+                        .findAny()
+                        .get();
+            }
+        }
+        throw new IllegalArgumentException("존재하지 않는 메뉴입니다.");
+    }
+
 }

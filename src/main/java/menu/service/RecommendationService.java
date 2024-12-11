@@ -6,6 +6,7 @@ import java.util.List;
 import menu.domain.Category;
 import menu.domain.Coach;
 import menu.domain.MealGroup;
+import menu.domain.Menus;
 import menu.domain.Recommendation;
 
 public class RecommendationService {
@@ -24,7 +25,20 @@ public class RecommendationService {
             coaches.add(coach);
         }
         mealGroup = new MealGroup(coaches);
-        return coachNames;
+        return coaches.stream()
+                .map(Coach::name)
+                .toList();
+    }
+
+    public boolean addCanNotEatableMenus(final String coachName, final List<String> canNotEatableMenus) {
+        Coach coach = mealGroup.findCoach(coachName);
+        if (canNotEatableMenus.isEmpty()) {
+            return true;
+        }
+        mealGroup.addCanNotEatableMenus(coach, canNotEatableMenus.stream()
+                .map(Menus::findByName)
+                .toList());
+        return true;
     }
 
     public List<String> recommendCategories() {

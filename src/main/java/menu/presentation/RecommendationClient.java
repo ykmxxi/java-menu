@@ -25,20 +25,33 @@ public class RecommendationClient {
     public void run() {
         outputView.printServiceStartMessage();
         List<String> coachNames = createMealGroup();
+        addCanNotEatableMenus(coachNames);
+
     }
 
     private List<String> createMealGroup() {
         return RetryHandler.retry(() -> {
-            List<String> coachNames = splitInput();
+            List<String> coachNames = splitInput(inputView.readCoachNames());
             validateCoachNameInput(coachNames);
             return recommendationService.createMealGroup(coachNames);
         }, outputView);
     }
 
-    private List<String> splitInput() {
-        return Arrays.stream(inputView.readCoachNames()
-                .split(",")
-        ).toList();
+    private void addCanNotEatableMenus(final List<String> coachNames) {
+        for (String coachName : coachNames) {
+            RetryHandler.retry(() -> {
+                List<String> canNotEatableMenus = splitInput(inputView.readCanNotEatableMenus(coachName));
+                if (!canNotEatableMenus.isEmpty()) {
+                    return recommendationService.addCanNotEatableMenus(coachName, canNotEatableMenus);
+                }
+                return true;
+            }, outputView);
+        }
+    }
+
+    private List<String> splitInput(final String input) {
+        return Arrays.stream(input.split(","))
+                .toList();
     }
 
     private void validateCoachNameInput(final List<String> coachNames) {

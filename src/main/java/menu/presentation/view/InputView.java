@@ -11,6 +11,11 @@ public class InputView {
         return input;
     }
 
+    public String readCanNotEatableMenus(final String coachName) {
+        System.out.printf("%s(이)가 못 먹는 메뉴를 입력해 주세요." + System.lineSeparator(), coachName);
+        return readString();
+    }
+
     private String readString() {
         return Console.readLine()
                 .strip();
