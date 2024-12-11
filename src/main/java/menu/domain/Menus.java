@@ -25,4 +25,15 @@ public class Menus {
         menus.put(category, categoryMenus);
     }
 
+    public static Menu find(final Category category, final String menuName) {
+        if (menus.containsKey(category)) {
+            List<Menu> categoryMenus = menus.get(category);
+            return categoryMenus.stream()
+                    .filter(menu -> menu.hasSameName(menuName))
+                    .findAny()
+                    .orElseThrow();
+        }
+        throw new IllegalArgumentException("존재하지 않는 메뉴입니다.");
+    }
+
 }

@@ -12,6 +12,10 @@ public class Menu {
         this.category = category;
     }
 
+    public boolean hasSameName(final String menuName) {
+        return this.name.equals(menuName);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

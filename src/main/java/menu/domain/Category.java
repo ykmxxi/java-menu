@@ -38,6 +38,14 @@ public enum Category {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리 순서입니다."));
     }
 
+    public Menu findMenu(final String menuName) {
+        Category matchedCategory = Arrays.stream(values())
+                .filter(category -> category.menuNames.contains(menuName))
+                .findAny()
+                .orElseThrow();
+        return Menus.find(matchedCategory, menuName);
+    }
+
     public List<String> menuNames() {
         return this.menuNames
                 .stream()
@@ -47,5 +55,4 @@ public enum Category {
     public String getName() {
         return this.name;
     }
-
 }
