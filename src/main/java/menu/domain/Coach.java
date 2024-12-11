@@ -19,6 +19,10 @@ public class Coach {
         this.canNotEatableMenus = canNotEatableMenus;
     }
 
+    public boolean isEatable(final Menu menu) {
+        return !canNotEatableMenus.contains(menu);
+    }
+
     private void validate(final String name, final List<Menu> canNotEatableMenus) {
         validateNameLength(name);
         validateCanNotEatableMenusCount(canNotEatableMenus);

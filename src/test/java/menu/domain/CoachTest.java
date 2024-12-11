@@ -1,5 +1,7 @@
 package menu.domain;
 
+import static menu.domain.Category.JAPANESE_FOOD;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class CoachTest {
@@ -41,6 +44,15 @@ class CoachTest {
     @Test
     void 코치_생성_성공() {
         assertDoesNotThrow(() -> new Coach("포비", List.of(menu)));
+    }
+
+    @DisplayName("먹을 수 있는 음식이면 true, 못 먹는 음식이면 false를 반환한다.")
+    @CsvSource(value = {"규동,true", "우동,false"})
+    @ParameterizedTest
+    void 먹을_수_있는_음식인지_확인(String menuName, boolean expected) {
+        Coach coach = new Coach("포비", List.of(new Menu("우동", JAPANESE_FOOD)));
+
+        assertThat(coach.isEatable(new Menu(menuName, JAPANESE_FOOD))).isEqualTo(expected);
     }
 
 }
