@@ -3,7 +3,6 @@ package menu.domain;
 import static menu.domain.Category.ASIAN_FOOD;
 import static menu.domain.Category.JAPANESE_FOOD;
 import static menu.domain.Category.KOREAN_FOOD;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
