@@ -38,6 +38,13 @@ public enum Category {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리 순서입니다."));
     }
 
+    public static Category findByName(final String categoryName) {
+        return Arrays.stream(values())
+                .filter(category -> category.name.equals(categoryName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));
+    }
+
     public Menu findMenu(final String menuName) {
         Category matchedCategory = Arrays.stream(values())
                 .filter(category -> category.menuNames.contains(menuName))

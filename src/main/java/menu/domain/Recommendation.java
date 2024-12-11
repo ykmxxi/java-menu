@@ -49,7 +49,9 @@ public class Recommendation {
     }
 
     private Menu getRandomMenu(final Category category) {
-        String randomMenuName = Randoms.shuffle(category.menuNames())
+        List<String> shuffle = Randoms.shuffle(category.menuNames());
+        System.out.println(shuffle);
+        String randomMenuName = shuffle
                 .getFirst();
         return category.findMenu(randomMenuName);
     }

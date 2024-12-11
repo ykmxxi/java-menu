@@ -6,6 +6,7 @@ import java.util.List;
 import menu.domain.Category;
 import menu.domain.Coach;
 import menu.domain.MealGroup;
+import menu.domain.Menu;
 import menu.domain.Menus;
 import menu.domain.Recommendation;
 
@@ -42,11 +43,20 @@ public class RecommendationService {
     }
 
     public List<String> recommendCategories() {
-        Recommendation recommendation = new Recommendation();
         List<Integer> numbers = getRandomNumbers();
         List<Category> recommendCategories = recommendation.recommendCategories(numbers);
         return recommendCategories.stream()
                 .map(Category::getName)
+                .toList();
+    }
+
+    public List<String> recommendMenus(final String coachName, final List<String> recommendCategories) {
+        List<Category> categories = new ArrayList<>();
+        for (String recommendCategory : recommendCategories) {
+            categories.add(Category.findByName(recommendCategory));
+        }
+        return recommendation.recommendMenus(categories, mealGroup.findCoach(coachName)).stream()
+                .map(Menu::name)
                 .toList();
     }
 

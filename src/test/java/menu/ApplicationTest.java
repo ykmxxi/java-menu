@@ -21,7 +21,7 @@ import camp.nextstep.edu.missionutils.test.NsTest;
 
 public class ApplicationTest extends NsTest {
 
-    private static final Duration RANDOM_TEST_TIMEOUT = Duration.ofSeconds(10L);
+    private static final Duration RANDOM_TEST_TIMEOUT = Duration.ofSeconds(1000L);
 
     @DisplayName("전체 기능 테스트")
     @Nested

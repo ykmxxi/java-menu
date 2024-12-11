@@ -3,6 +3,7 @@ package menu.presentation;
 import java.util.Arrays;
 import java.util.List;
 
+import camp.nextstep.edu.missionutils.Console;
 import menu.presentation.view.InputValidator;
 import menu.presentation.view.InputView;
 import menu.presentation.view.OutputView;
@@ -23,10 +24,29 @@ public class RecommendationClient {
     }
 
     public void run() {
-        outputView.printServiceStartMessage();
-        List<String> coachNames = createMealGroup();
-        addCanNotEatableMenus(coachNames);
+        try {
+            outputView.printServiceStartMessage();
+            List<String> coachNames = createMealGroup();
+            addCanNotEatableMenus(coachNames);
+            List<String> recommendCategories = getRecommendCategories();
+            getRecommendMenus(coachNames, recommendCategories);
+            outputView.printServiceEndMessage();
+        } finally {
+            Console.close();
+        }
+    }
 
+    private List<String> getRecommendCategories() {
+        List<String> recommendCategories = recommendationService.recommendCategories();
+        outputView.printCategories(recommendCategories);
+        return recommendCategories;
+    }
+
+    private void getRecommendMenus(final List<String> coachNames, final List<String> recommendCategories) {
+        for (String coachName : coachNames) {
+            List<String> recommendMenus = recommendationService.recommendMenus(coachName, recommendCategories);
+            outputView.printMenus(coachName, recommendMenus);
+        }
     }
 
     private List<String> createMealGroup() {
