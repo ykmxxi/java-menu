@@ -3,7 +3,6 @@ package menu.presentation;
 import java.util.Arrays;
 import java.util.List;
 
-import camp.nextstep.edu.missionutils.Console;
 import menu.presentation.view.InputValidator;
 import menu.presentation.view.InputView;
 import menu.presentation.view.OutputView;
@@ -24,29 +23,22 @@ public class RecommendationClient {
     }
 
     public void run() {
-        try {
-            outputView.printServiceStartMessage();
-            List<String> coachNames = createMealGroup();
-            addCanNotEatableMenus(coachNames);
-            List<String> recommendCategories = getRecommendCategories();
-            getRecommendMenus(coachNames, recommendCategories);
-            outputView.printServiceEndMessage();
-        } finally {
-            Console.close();
-        }
+        outputView.printServiceStartMessage();
+        List<String> coachNames = createMealGroup();
+        addCanNotEatableMenus(coachNames);
+        printRecommendMenus(coachNames);
+        outputView.printServiceEndMessage();
+    }
+
+    private void printRecommendMenus(final List<String> coachNames) {
+        List<String> recommendCategories = getRecommendCategories();
+        List<List<String>> recommendMenus = recommendationService.recommendMenus(coachNames, recommendCategories);
+        outputView.printCategories(recommendCategories);
+        outputView.printMenus(coachNames, recommendMenus);
     }
 
     private List<String> getRecommendCategories() {
-        List<String> recommendCategories = recommendationService.recommendCategories();
-        outputView.printCategories(recommendCategories);
-        return recommendCategories;
-    }
-
-    private void getRecommendMenus(final List<String> coachNames, final List<String> recommendCategories) {
-        for (String coachName : coachNames) {
-            List<String> recommendMenus = recommendationService.recommendMenus(coachName, recommendCategories);
-            outputView.printMenus(coachName, recommendMenus);
-        }
+        return recommendationService.recommendCategories();
     }
 
     private List<String> createMealGroup() {

@@ -2,6 +2,7 @@ package menu.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +29,17 @@ public class Recommendation {
                 .toList();
     }
 
-    public List<Menu> recommendMenus(final List<Category> categories, final Coach coach) {
-        List<Menu> menus = new ArrayList<>();
+    public Map<Coach, List<Menu>> recommendMenus(final List<Category> categories, final List<Coach> coaches) {
+        Map<Coach, List<Menu>> menus = new LinkedHashMap<>();
         for (Category category : categories) {
-            Menu menu = getRandomMenu(category);
-            while (isAlreadyEating(menus, menu) || isCanNotEatableMenu(coach, menu)) {
-                menu = getRandomMenu(category);
+            for (Coach coach : coaches) {
+                Menu menu = Menus.find(category, getRandomMenu(category));
+                List<Menu> coachMenus = menus.getOrDefault(coach, new ArrayList<>());
+                while (isAlreadyEating(coachMenus, menu) || isCanNotEatableMenu(coach, menu)) {
+                    menu = Menus.find(category, getRandomMenu(category));
+                }
+                menus.computeIfAbsent(coach, (value) -> new ArrayList<>()).add(menu);
             }
-            menus.add(menu);
         }
         return menus;
     }
@@ -48,12 +52,9 @@ public class Recommendation {
         return !coach.isEatable(menu);
     }
 
-    private Menu getRandomMenu(final Category category) {
-        List<String> shuffle = Randoms.shuffle(category.menuNames());
-        System.out.println(shuffle);
-        String randomMenuName = shuffle
-                .getFirst();
-        return category.findMenu(randomMenuName);
+    private String getRandomMenu(final Category category) {
+        return Randoms.shuffle(category.menuNames())
+                .get(0);
     }
 
 }

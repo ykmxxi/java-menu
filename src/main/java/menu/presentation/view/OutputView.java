@@ -1,7 +1,6 @@
 package menu.presentation.view;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -26,8 +25,10 @@ public class OutputView {
         System.out.println(format("카테고리", recommendCategories));
     }
 
-    public void printMenus(final String coachName, final List<String> recommendMenus) {
-        System.out.println(format(coachName, recommendMenus));
+    public void printMenus(final List<String> coachNames, final List<List<String>> recommendMenus) {
+        for (int i = 0; i < coachNames.size(); i++) {
+            System.out.println(format(coachNames.get(i), recommendMenus.get(i)));
+        }
     }
 
     private String format(final String type, final List<String> outputs) {

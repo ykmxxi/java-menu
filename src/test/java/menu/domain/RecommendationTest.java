@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -50,10 +51,11 @@ class RecommendationTest {
         Coach coach = new Coach("포비");
         List<Category> categories = List.of(JAPANESE_FOOD, JAPANESE_FOOD, KOREAN_FOOD, KOREAN_FOOD, ASIAN_FOOD);
 
-        List<Menu> menus = recommendation.recommendMenus(categories, coach);
+        Map<Coach, List<Menu>> menus = recommendation.recommendMenus(categories, List.of(coach));
 
-        assertThat(menus).hasSize(5);
-        assertThat(menus).doesNotHaveDuplicates();
+        List<Menu> coachMenus = menus.get(coach);
+        assertThat(coachMenus).hasSize(5);
+        assertThat(coachMenus).doesNotHaveDuplicates();
     }
 
     private static Stream<Arguments> provideSequencesAndExpected() {

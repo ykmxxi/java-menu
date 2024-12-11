@@ -2,6 +2,7 @@ package menu.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import menu.domain.Category;
 import menu.domain.Coach;
@@ -50,13 +51,21 @@ public class RecommendationService {
                 .toList();
     }
 
-    public List<String> recommendMenus(final String coachName, final List<String> recommendCategories) {
-        List<Category> categories = new ArrayList<>();
-        for (String recommendCategory : recommendCategories) {
-            categories.add(Category.findByName(recommendCategory));
+    public List<List<String>> recommendMenus(final List<String> coachNames, final List<String> recommendCategories) {
+        List<Category> categories = recommendCategories.stream()
+                .map(Category::findByName)
+                .toList();
+        List<Coach> coaches = coachNames.stream()
+                .map(name -> mealGroup.findCoach(name))
+                .toList();
+        Map<Coach, List<Menu>> recommendMenus = recommendation.recommendMenus(categories, coaches);
+        List<List<String>> menus = new ArrayList<>();
+        for (Coach coach : coaches) {
+            menus.add(recommendMenus.get(coach).stream()
+                    .map(Menu::name)
+                    .toList());
         }
-        return recommendation.recommendMenus(categories, mealGroup.findCoach(coachName)).stream()
-                .map(Menu::name)
+        return menus.stream()
                 .toList();
     }
 
