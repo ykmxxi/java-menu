@@ -5,11 +5,11 @@ import java.util.List;
 import menu.domain.Category;
 import menu.domain.Recommendation;
 
-public class MenuService {
+public class RecommendationService {
 
     private final Recommendation recommendation;
 
-    public MenuService(final Recommendation recommendation) {
+    public RecommendationService(final Recommendation recommendation) {
         this.recommendation = recommendation;
     }
 
